@@ -53,12 +53,10 @@ const UserBookings = () => {
     }
   };
 
-  // ✅ Sort Bookings By Latest First
   const sortedBookings = [...bookings].sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
-  // ✅ Pagination Logic
   const indexOfLastBooking = currentPage * bookingsPerPage;
   const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
   const currentBookings = sortedBookings.slice(indexOfFirstBooking, indexOfLastBooking);
@@ -117,7 +115,6 @@ const UserBookings = () => {
               ))}
             </div>
 
-            {/* ✅ Pagination Controls */}
             {totalPages > 1 && (
               <div className="mt-8 flex justify-center items-center space-x-4">
                 <button

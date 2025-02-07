@@ -52,12 +52,10 @@ const AdminBookings = () => {
     }
   };
 
-  // ✅ Sort bookings by latest first
   const sortedBookings = [...bookings].sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
-  // ✅ Pagination Logic
   const indexOfLastBooking = currentPage * bookingsPerPage;
   const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
   const currentBookings = sortedBookings.slice(indexOfFirstBooking, indexOfLastBooking);
