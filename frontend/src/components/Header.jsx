@@ -17,7 +17,6 @@ const Header = () => {
     try {
       await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
 
-      // ✅ Clear storage and reset context
       localStorage.clear();
       sessionStorage.clear();
       setAuthUser(null);
