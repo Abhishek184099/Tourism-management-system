@@ -29,13 +29,13 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<ExploreNepal />} />
         <Route path="/user-login" element={<UserLogin />} />
         <Route path="/user-signup" element={<UserSignup />} />
         <Route path="/service-provider-login" element={<ServiceProviderLogin />} />
         <Route path="/service-provider-signup" element={<ServiceProviderSignup />} />
         <Route path="/preferences" element={<UserPreferences />} />
-        <Route path="/explorenepal" element={authUser ? <ExploreNepal /> : <Navigate to = "/"/>} />
+        <Route path="/mode" element= {<LandingPage/>} />
         <Route path="/admin-dashboard" element={<AdminPanel />} />
         <Route path="/admin/destinations" element={<ManageDestinations />} />
         <Route path="/admin/add-destination" element={<AddDestination />} />

@@ -7,7 +7,7 @@ const AdminBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const bookingsPerPage = 4; // ✅ Show 4 bookings per page
+  const bookingsPerPage = 4; 
 
   useEffect(() => {
     fetchBookings();
@@ -52,15 +52,21 @@ const AdminBookings = () => {
     }
   };
 
+  // ✅ Sort bookings by latest first
+  const sortedBookings = [...bookings].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
+  // ✅ Pagination Logic
   const indexOfLastBooking = currentPage * bookingsPerPage;
   const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
-  const currentBookings = bookings.slice(indexOfFirstBooking, indexOfLastBooking);
+  const currentBookings = sortedBookings.slice(indexOfFirstBooking, indexOfLastBooking);
 
   return (
     <div className="flex flex-col h-screen">
-      <AdminHeader /> 
+      <AdminHeader />
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar /> 
+        <Sidebar />
         <main className="flex-1 p-6 bg-gray-100 overflow-y-auto">
           <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Manage Bookings</h2>
 

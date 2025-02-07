@@ -42,7 +42,7 @@ const UserPreferences = () => {
       if (!res.ok) throw new Error(data.error);
       localStorage.setItem("interests", JSON.stringify(data.preferences.interests));
       toast.success("Preferences saved successfully!");
-      navigate("/exploreNepal"); 
+      navigate("/"); 
     } catch (err) {
       toast.error(err.message);
     }

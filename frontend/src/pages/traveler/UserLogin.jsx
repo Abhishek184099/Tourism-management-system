@@ -17,7 +17,7 @@ const UserLogin = () => {
     e.preventDefault();
     const sucsess = await login(formData);
     if(sucsess){
-     navigate("/explorenepal");
+     navigate("/");
     }
   
    }

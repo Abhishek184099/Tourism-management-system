@@ -1,18 +1,26 @@
 import React from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../context/AuthContext"; // ✅ Ensure correct import
 
 const AdminHeader = () => {
   const navigate = useNavigate();
+  const { setAuthUser } = useAuthContext(); // ✅ Get `setAuthUser` from context
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
 
-    fetch("/api/auth/logout", {
-      method: "POST",
-      credentials: "include",
-    }).then(() => {
+      // ✅ Clear local storage and update state
       localStorage.clear();
-      navigate("/");
-    });
+      sessionStorage.clear();
+      setAuthUser(null); 
+
+      toast.success("Logged out successfully");
+      navigate("/"); // ✅ Ensure navigation happens after logout
+    } catch (error) {
+      toast.error("Logout failed. Please try again.");
+    }
   };
 
   return (
@@ -23,8 +31,6 @@ const AdminHeader = () => {
       >
         ExploreNepal
       </button>
-
-
 
       <button
         onClick={handleLogout}
