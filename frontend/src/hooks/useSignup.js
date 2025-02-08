@@ -19,6 +19,8 @@ const useSignup = () => {
 
       const text = await res.text();
       const data = text?JSON.parse(text) : {};
+      console.log("DATA:", data);
+      console.log("text:", text);
 
       if (data.error) {
         throw new Error(data.error || "Signup failed");
