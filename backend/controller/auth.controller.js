@@ -17,7 +17,7 @@ const signup = async (req, res) => {
             name, 
             email,
             password: hashedPassword,
-            role : role,
+            role : role || "user",
         })
 
 
@@ -29,7 +29,7 @@ const signup = async (req, res) => {
                 _id: newUser._id,
                 name: newUser.name,
                 email: newUser.email,
-                role: newUser.role,
+                role: newUser.role ,
                 interests : newUser.preferences.interests,
             })
         }

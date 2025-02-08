@@ -22,7 +22,6 @@ const useLogin = () => {
         throw new Error(data.error || "Login failed");
       }
 
-      // Save user info in localStorage
       localStorage.setItem("users", JSON.stringify(data));
       setAuthUser(data);
 

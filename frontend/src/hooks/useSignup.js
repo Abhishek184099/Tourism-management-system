@@ -8,7 +8,7 @@ const useSignup = () => {
 
   const signup = async ({ name, email, password, role }) => {
     const success = handleInputErrors({ name, email, password, role });
-    if (!success) return false;  // ✅ Return false if validation fails
+    if (!success) return false;  
 
     try {
       const res = await fetch("/api/auth/signup", {
@@ -17,8 +17,10 @@ const useSignup = () => {
         body: JSON.stringify({ name, email, password, role }),
       });
 
-      const data = await res.json();
-      if (!res.ok) {
+      const text = await res.text();
+      const data = text?JSON.parse(text) : {};
+
+      if (data.error) {
         throw new Error(data.error || "Signup failed");
       }
 
@@ -26,7 +28,7 @@ const useSignup = () => {
       setAuthUser(data);
       toast.success("Registered successfully!");
 
-      return true;  // ✅ Return true when signup is successful
+      return true;  
     } catch (error) {
       toast.error(error.message);
       return false;

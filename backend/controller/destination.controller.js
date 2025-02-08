@@ -174,7 +174,25 @@ const addReview = async (req, res) => {
   }
 };
 
+const getAdminDestinations = async (req, res) => {
+  try {
+    if (!req.user || req.user.role !== "admin") {
+      return res.status(403).json({ error: "Access denied. Admins only" });
+    }
+
+    const destinations = await Destination.find({ createdBy: req.user._id })
+      .populate("createdBy", "name email") 
+      .select("placeName location category photos createdAt");
+
+    res.status(200).json(destinations);
+  } catch (error) {
+    console.error("Error fetching admin destinations:", error.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 
 
-module.exports = { addDestination, getAllDestinations, getDestinationDetail, editDestination, deleteDestination,addReview };
+
+
+module.exports = { addDestination, getAllDestinations, getDestinationDetail, editDestination, deleteDestination,addReview,getAdminDestinations };

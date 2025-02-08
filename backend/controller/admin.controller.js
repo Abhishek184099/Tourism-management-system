@@ -1,4 +1,5 @@
 const Booking = require("../model/Booking");
+const Package = require("../model/Package");
 
 const getAdminDashboardStats = async (req, res) => {
   try {
@@ -6,15 +7,19 @@ const getAdminDashboardStats = async (req, res) => {
       return res.status(403).json({ error: "Access denied. Admins only" });
     }
 
+    const adminPackages = await Package.find({ createdBy: req.user._id }).select("_id");
+
+    const packageIds = adminPackages.map(pkg => pkg._id);
+
     const totalNumberOfPeople = await Booking.aggregate([
-      { $match: { status: "confirmed" } }, // ✅ Filter by confirmed bookings only
+      { $match: { package: { $in: packageIds } } }, 
       { $group: { _id: null, total: { $sum: "$numberOfPeople" } } }
     ]);
 
-    const totalBookings = await Booking.countDocuments({ status: "confirmed" });
+    const totalBookings = await Booking.countDocuments({ package: { $in: packageIds } });
 
     const totalRevenue = await Booking.aggregate([
-      { $match: { status: "confirmed", paymentStatus: "paid" } },
+      { $match: { package: { $in: packageIds }, paymentStatus: "paid" } },
       { $group: { _id: null, total: { $sum: "$amountPaid" } } }
     ]);
 

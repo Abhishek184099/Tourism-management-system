@@ -11,7 +11,7 @@ const ManageDestinations = () => {
     useEffect(() => {
         const fetchDestinations = async () => {
             try {
-                const res = await fetch("/api/destinations/", { credentials: "include" });
+                const res = await fetch("/api/destinations/admin", { credentials: "include" });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.error);
                 setDestinations(data);
