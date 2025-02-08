@@ -17,8 +17,9 @@ const useLogin = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
-      if (!res.ok) {
+      const text = await res.text();
+      const data = text?JSON.parse(text) : {};
+      if (data.error) {
         throw new Error(data.error || "Login failed");
       }
 

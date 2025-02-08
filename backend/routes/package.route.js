@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { createPackage, getAllPackages, getPackageById, updatePackage, deletePackage } = require("../controller/package.contoller");
+const { createPackage, getAllPackages, getPackageById, updatePackage, deletePackage, getAdminPackage } = require("../controller/package.contoller");
 const { protectRoute } = require("../middleware/protectRoute");
 const upload = require("../utils/multer");
 
-router.get("/", getAllPackages); 
+router.get("/admin",protectRoute,getAdminPackage) ;
+
+router.get("/", getAllPackages);
 router.get("/:packageId", getPackageById); 
 
 router.post("/", protectRoute, upload.array("photos", 5), createPackage); // Create a new package

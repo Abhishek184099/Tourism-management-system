@@ -120,7 +120,7 @@ const AdminAddEditPackage = () => {
         credentials: "include",
         body: formDataToSend,
       });
-
+        
       if (!res.ok) throw new Error("Failed to submit package");
 
       toast.success(`Package ${isEditing ? "updated" : "created"} successfully!`);

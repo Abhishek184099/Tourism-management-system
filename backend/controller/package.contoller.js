@@ -119,4 +119,25 @@ const deletePackage = async (req, res) => {
   }
 };
 
-module.exports = { createPackage, getAllPackages, getPackageById, updatePackage, deletePackage };
+const getAdminPackage = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    if(!userId || req.user.role !== "admin") {
+
+      return res.status(404).json({error: "Invalid request."});
+    }
+    const package = await Package.find({createdBy : userId}).populate("destinations", "placeName location");
+    if (!package) {
+      return res.status(404).json({error : "no package found"});
+    }
+
+    return res.status(200).json(package);
+    
+
+  } catch (error) {
+    console.error("Error in admin package controller:", error.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+module.exports = { createPackage, getAllPackages, getPackageById, updatePackage, deletePackage,getAdminPackage };

@@ -62,6 +62,7 @@ const login = async (req, res) => {
                 })
             }
         }
+        console.log("invalid");
         return res.status(400).json({ error: 'invalid credential' })
 
     } catch (err) {

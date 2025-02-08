@@ -19,7 +19,7 @@ const AdminManagePackages = () => {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const res = await fetch("/api/packages");
+        const res = await fetch("/api/packages/admin");
         if (!res.ok) throw new Error("Failed to fetch packages");
 
         const data = await res.json();
